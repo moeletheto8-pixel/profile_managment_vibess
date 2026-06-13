@@ -50,6 +50,14 @@ app.get("/", (req, res) => {
   res.redirect("login.html");
 });
 
+app.get('api/version', (req, res) => {
+  res.json({ 
+    version: '1.0.0', 
+    message: 'version control demo update',
+    updatedby:"se_2026"
+  });
+});
+
 // Temporary registration route for testing
 app.post("/api/auth/register", async (req, res) => {
   try {
