@@ -1,4 +1,4 @@
-const express = require("express");gi 
+const express = require("express"); 
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -48,6 +48,23 @@ function authenticateToken(req, res, next) {
 // Test route
 app.get("/", (req, res) => {
   res.redirect("login.html");
+});
+
+//AIP STATUS ROUTE
+app.get("/api/status", (req, res) => {
+  try {
+    const databaseStatus = mongoose.connection.readyState === 1 ? "connected" : "disconnected";
+
+    res.json({
+      message: "API status is healthy.",
+      appName: "profile management API",
+      version: "1.0.0",
+      database: databaseStatus,
+      environment: process.env.NODE_ENV || "development"
+    });
+  } catch (error) {
+    res.status(500).json({ message: "ServerError checking API status." });
+  }
 });
 
 app.get('api/version', (req, res) => {
